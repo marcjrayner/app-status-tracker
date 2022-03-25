@@ -13,14 +13,7 @@ const AppStatusContainer = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(" http://localhost:5002/app_statuses")
-      .then((response) => {
-        console.log(response);
-        setAllStatuses(response.data);
-        setLatestStatus(response.data[0]);
-      })
-      .catch((error) => console.log(error));
+    getStatusList();
   }, []);
 
   const handleOpenPopup = () => {
@@ -30,6 +23,17 @@ const AppStatusContainer = () => {
     setOpen(false);
   };
 
+  const getStatusList = () => {
+    axios
+      .get(" http://localhost:5002/app_statuses")
+      .then((response) => {
+        console.log(response);
+        setAllStatuses(response.data);
+        setLatestStatus(response.data[0]);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleAddStatus = async (down, message) => {
     const data = {
       down,
@@ -37,8 +41,8 @@ const AppStatusContainer = () => {
     };
     axios.post(" http://localhost:5002/app_statuses", data).then((response) => {
       console.log(response);
-      setAllStatuses(response.data);
-      setLatestStatus(response.data[0]);
+      setLatestStatus(response.data);
+      getStatusList();
     });
   };
 
