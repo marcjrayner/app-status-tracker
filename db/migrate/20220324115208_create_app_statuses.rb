@@ -1,0 +1,10 @@
+class CreateAppStatuses < ActiveRecord::Migration[7.0]
+  def change
+    create_table :app_statuses do |t|
+      t.string :message
+      t.boolean :down
+
+      t.timestamps
+    end
+  end
+end
