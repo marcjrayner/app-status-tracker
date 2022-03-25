@@ -72,6 +72,14 @@ const AppStatusContainer = () => {
               latestStatus={latestStatus}
             />
           )}
+          <Button
+            variant="contained"
+            color="success"
+            style={{ marginTop: 20 }}
+            onClick={handleOpenPopup}
+          >
+            Add Status Update
+          </Button>
           <Typography variant="h6" lineHeight={3}>
             App Status History:
           </Typography>
@@ -81,7 +89,6 @@ const AppStatusContainer = () => {
               formatDate={formatDate}
             />
           )}
-          <Button onClick={handleOpenPopup}>Add Status Update</Button>
           {latestStatus && (
             <Popup
               open={open}
