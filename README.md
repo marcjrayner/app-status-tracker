@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app can be used to manually set and track status updates. It utilises a react based frontend, with Rails in API-mode. 
+Unfortunately I made a bit of a mistake in locating the frontend app inside 
+But the activity was time-boxed and a bit rushed! It did take me around 5 hours but didn't have time to fix everything. 
+It is well well short on the testing front. I wanted to add a cypress test  / some others but was already over time so just needed to get it finished. 
 
-Things you may want to cover:
+* Ruby version - 3.0.3
+* Rails version - 7.0.2.3
 
-* Ruby version
+TO RUN THE APP
 
-* System dependencies
+* Pull the repo
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Run "Bundle install"
+* cd into directory "statuses-web"
+* Run "npm install"
+* cd .. 
+* Run "rails db:migrate"
+* Run "rails db:seeds"
+* Run "rails s -p 5002" 
+* Run "yarn --cwd statuses-web start" -> runs the frontend at port 3000 
