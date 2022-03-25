@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import LatestAppStatus from "./LatestAppStatus";
 import AppStatusesTable from "./AppStatusesTable";
 import Popup from "./Popup";
@@ -6,10 +7,20 @@ import Popup from "./Popup";
 import { Typography, Grid, Button } from "@mui/material";
 
 const AppStatusContainer = () => {
-  //   const [allStatuses, setAllStatuses] = useState([]);
+  const [allStatuses, setAllStatuses] = useState([]);
+  const [latestStatus, setLatestStatus] = useState([]);
   const [open, setOpen] = useState(false);
 
-  //   useEffect(() => {}, []);
+  useEffect(() => {
+    axios
+      .get(" http://localhost:5002/app_statuses")
+      .then((response) => {
+        console.log(response);
+        setAllStatuses(response.data);
+        setLatestStatus(response.data[0]);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleOpenPopup = () => {
     setOpen(true);
@@ -29,7 +40,7 @@ const AppStatusContainer = () => {
           </Typography>
 
           <LatestAppStatus />
-          <AppStatusesTable />
+          <AppStatusesTable allStatuses={allStatuses} />
           <Button onClick={handleOpenPopup}>Hello</Button>
           <Popup
             open={open}
