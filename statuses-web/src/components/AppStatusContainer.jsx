@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LatestAppStatus from "./LatestAppStatus";
 import AppStatusesTable from "./AppStatusesTable";
+import { format } from "date-fns";
 import Popup from "./Popup";
 
 import { Typography, Grid, Button } from "@mui/material";
 
 const AppStatusContainer = () => {
-  const [allStatuses, setAllStatuses] = useState([]);
-  const [latestStatus, setLatestStatus] = useState([]);
+  const [allStatuses, setAllStatuses] = useState();
+  const [latestStatus, setLatestStatus] = useState();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -31,22 +32,50 @@ const AppStatusContainer = () => {
 
   const handleAddStatus = (e) => {};
 
+  const formatDate = (date) => {
+    console.log(format(date, "PPpp"));
+    return format(date, "PPpp");
+  };
+
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: "100vh" }}
+      >
         <Grid item xs={12} md={12}>
-          <Typography variant="h6" gutterBottom>
-            Basic Structure
+          <Typography variant="h6" lineHeight={3}>
+            Currenr App Status:
           </Typography>
 
-          <LatestAppStatus />
-          <AppStatusesTable allStatuses={allStatuses} />
-          <Button onClick={handleOpenPopup}>Hello</Button>
-          <Popup
-            open={open}
-            handleClose={handleClosePopup}
-            addStatusUpdate={handleAddStatus}
-          />
+          {latestStatus && (
+            <LatestAppStatus
+              formatDate={formatDate}
+              latestStatus={latestStatus}
+            />
+          )}
+          <Typography variant="h6" lineHeight={3}>
+            App Status History:
+          </Typography>
+          {allStatuses && (
+            <AppStatusesTable
+              allStatuses={allStatuses}
+              formatDate={formatDate}
+            />
+          )}
+          <Button onClick={handleOpenPopup}>Add Status Update</Button>
+          {latestStatus && (
+            <Popup
+              open={open}
+              handleClose={handleClosePopup}
+              currentlyDown={latestStatus.down}
+              addStatusUpdate={handleAddStatus}
+            />
+          )}
         </Grid>
       </Grid>
     </>
