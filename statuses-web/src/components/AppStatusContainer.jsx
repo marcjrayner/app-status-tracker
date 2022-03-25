@@ -30,7 +30,17 @@ const AppStatusContainer = () => {
     setOpen(false);
   };
 
-  const handleAddStatus = (e) => {};
+  const handleAddStatus = async (down, message) => {
+    const data = {
+      down,
+      message,
+    };
+    axios.post(" http://localhost:5002/app_statuses", data).then((response) => {
+      console.log(response);
+      setAllStatuses(response.data);
+      setLatestStatus(response.data[0]);
+    });
+  };
 
   const formatDate = (date) => {
     console.log(format(date, "PPpp"));
@@ -49,7 +59,7 @@ const AppStatusContainer = () => {
       >
         <Grid item xs={12} md={12}>
           <Typography variant="h6" lineHeight={3}>
-            Currenr App Status:
+            Current App Status:
           </Typography>
 
           {latestStatus && (
